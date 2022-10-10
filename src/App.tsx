@@ -6,13 +6,16 @@ import { SignUp } from "./Component/singUp";
 import { Header } from "./Common/header";
 import { Dashboard } from "./Component/dashboard";
 import { useEffect } from "react";
+import { ShowPost } from "./Component/showPost";
+import { AddPost } from "./Component/addPost";
 
 
 function App() {
   const Token = localStorage.getItem("Token") ? localStorage.getItem("Token") : false;
   const navigate = useNavigate();
   const { pathname } = useLocation();
-  console.log(123123123,pathname)
+  // console.log(123123123,pathname)
+
   useEffect(()=>{
     if(Token && pathname === '/'){
       navigate('/dashboard');
@@ -25,7 +28,10 @@ function App() {
       <Routes>
         {Token ? (
           <> 
-              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/dashboard/" element={<Dashboard />}>
+                <Route path="showpost" element={<ShowPost />}/>
+                <Route path="addpost" element={<AddPost />}/>
+              </Route>
               <Route path="*" element={<PageNotFound />} />
           </>
         ) : (

@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { model } from "../Services/model";
+import { IModel } from "../Interfaces/model";
 import { useLoginUserMutation } from "../Services/myApi";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -15,9 +15,9 @@ export const Home = () => {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<model>();
+  } = useForm<IModel>();
 
-  const onSubmit = (info:model) => {
+  const onSubmit = (info:IModel) => {
     loginUser(info);
     reset({
         email: "",

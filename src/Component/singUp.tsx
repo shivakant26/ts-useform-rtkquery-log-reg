@@ -1,7 +1,7 @@
 import { Mode } from "fs";
 import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { model } from "../Services/model";
+import { IModel } from "../Interfaces/model";
 import { useRegisterUserMutation } from "../Services/myApi";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -12,8 +12,8 @@ const {
     register,
      handleSubmit,
      reset,
-     formState :{ errors} } = useForm<model>();
-    const onSubmit = (info:model) => {
+     formState :{ errors} } = useForm<IModel>();
+    const onSubmit = (info:IModel) => {
         registerUser(info)
         reset({
             name:"",
