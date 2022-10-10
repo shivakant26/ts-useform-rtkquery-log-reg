@@ -1,22 +1,42 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-import { Home } from './Component/Home';
-import { BrowserRouter as Router, Routes ,Route} from 'react-router-dom';
-import { PageNotFound } from './Component/404';
-import { SignUp } from './Component/singUp';
-import { Header } from './Common/header';
+import "./App.css";
+import { Home } from "./Component/Home";
+import { BrowserRouter as Router, Routes, Route, useNavigate, useLocation } from "react-router-dom";
+import { PageNotFound } from "./Component/404";
+import { SignUp } from "./Component/singUp";
+import { Header } from "./Common/header";
+import { Dashboard } from "./Component/dashboard";
+import { useEffect } from "react";
+
+
 function App() {
+  const Token = localStorage.getItem("Token") ? localStorage.getItem("Token") : false;
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
+  console.log(123123123,pathname)
+  useEffect(()=>{
+    if(Token && pathname === '/'){
+      navigate('/dashboard');
+    }
+  },[Token])
   return (
     <div className="App">
-      <Router>
-        <Header />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/signup" element={<SignUp />} />
-          <Route path='*' element={<PageNotFound />} />
-        </Routes>
-      </Router>
+      {/* <Router> */}
+      <Header />
+      <Routes>
+        {Token ? (
+          <> 
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="*" element={<PageNotFound />} />
+          </>
+        ) : (
+        <>
+              <Route path="/" element={<Home />} />
+              <Route path="/signup" element={<SignUp />} />
+              <Route path="*" element={<PageNotFound />} />
+          </>
+        )}
+            </Routes>
+      {/* </Router> */}
     </div>
   );
 }

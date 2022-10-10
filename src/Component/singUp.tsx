@@ -1,19 +1,34 @@
 import { Mode } from "fs";
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { model } from "../Services/model";
 import { useRegisterUserMutation } from "../Services/myApi";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export const SignUp = () =>{
-const [registerUser] = useRegisterUserMutation();
-
+const [registerUser , mutationResult] = useRegisterUserMutation();
 const { 
     register,
      handleSubmit,
+     reset,
      formState :{ errors} } = useForm<model>();
-    const onSubmit = (data:model) => {
-        registerUser(data)
+    const onSubmit = (info:model) => {
+        registerUser(info)
+        reset({
+            name:"",
+            email: "",
+            password: ""
+          });
 }
+
+useEffect(()=>{
+    if(mutationResult && mutationResult.status === 'fulfilled'){
+        toast.success("User Registerd Successfully",
+           {position: toast.POSITION.TOP_RIGHT}) 
+    }
+  },[mutationResult])
+
     return(
         <>
         <div className="form-wr">
@@ -58,6 +73,7 @@ const {
                 </div>
             </div>
         </div>
-        </>
+      <ToastContainer/>
+    </>
     )
 }
